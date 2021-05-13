@@ -13,7 +13,6 @@ const Carousel = () => {
     cheetahImage,
     coralImage,
     geeseImage,
-    geeseImage,
     hikingImage,
     orchidsImage,
     waspImage,
@@ -32,98 +31,48 @@ const Carousel = () => {
     <img
       key={element.index}
       src={elements[element.index]}
-      style={{ left: `${element.offset * 512}px` }}
+      style={{ left: `${element.offset * 33}vw` }}
       alt={`${elements[element.index]}`}
       className="carousel-item"
     />
   ));
 
-  const next = () => {
+
+  const next = (e) => {
+    e.target.classList.toggle("disable");
     let mass = [...data];
     mass.forEach((element) => {
       element.offset -= 1;
     });
+    let index = mass[mass.length-1].index + 1;
+    if( index === 6) {
+      index = 0;
+    }
+    mass.push({ offset: mass[mass.length-1].offset+1, index: index});
     setElements(mass);
-    /*setElements([
-      { offset: currentOffset - 1, index: elements.length - 1 },
-      { offset: currentOffset, index: 0 },
-      { offset: currentOffset + 1, index: 1 },
-      { offset: currentOffset + 2, index: 2 },
-    ]); */
     setTimeout(() => {
-      let mass1 = [...data];
-      mass1.forEach((element) => {
-        if (index === 6) {
-          element.index = 0;
-        } else {
-          element.index += 1;
-        }
-      });
-      console.log(data);
-      setElements(mass1);
-      console.log(data);
-      /* setElements([
-        { offset: currentOffset, index: 0 },
-        { offset: currentOffset + 1, index: 1 },
-        { offset: currentOffset + 2, index: 2 },
-        { offset: currentOffset + 3, index: 3 },
-      ]); */
-    }, 1000);
+      setElements((elem) => {
+        let mass1 = elem.slice();
+        mass1.splice(0,1);
+        return mass1;
+      })
+      e.target.classList.toggle("disable");
+    }, 1000); 
   };
 
   return (
     <>
       <div className="carousel">{images}</div>
       <div className="button-container">
-        <button type="button" className="prev-image" onClick={next}>
+        <button type="button" className="prev-image" onClick={(e) =>next(e)}>
           &lt;
         </button>
-        <button type="button" className="next-image" onClick={next}>
+        <button type="button" className="next-image" onClick={(e) => next(e)}>
           &gt;
         </button>
       </div>
     </>
   );
-
-  /* const [position, setPosition] = useState(10);
-
-  const nextImage = () => {
-    if (position === -1190) {
-      setPosition(10);
-    } else {
-      setPosition((p) => p - 400);
-    }
-  };
-  const prevImage = () => {
-    if (position === 10) {
-      setPosition(-1190);
-    } else {
-      setPosition((p) => p + 400);
-    }
-  }; 
-
-  return (
-    <div className="carousel-container">
-      <div className="carousel">
-        <div className="carousel-row" style={{ left: `${position}px` }}>
-          <img src={cheetahImage} alt="cheetah" />
-          <img src={coralImage} alt="coral" />
-          <img src={geeseImage} alt="geese" />
-          <img src={hikingImage} alt="hiking" />
-          <img src={orchidsImage} alt="orchids" />
-          <img src={waspImage} alt="wasp" />
-        </div>
-      </div>
-      <div className="button-container">
-        <button type="button" className="prev-image" onClick={prevImage}>
-          &lt;
-        </button>
-        <button type="button" className="next-image" onClick={nextImage}>
-          &gt;
-        </button>
-      </div>
-    </div>
-  ); */
 };
 
 export default Carousel;
