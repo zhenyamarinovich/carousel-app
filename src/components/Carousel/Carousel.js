@@ -20,7 +20,9 @@ const Carousel = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [currentOffset, setCurrentOffset] = useState(0);
-  const [data, setElements] = useState([
+  const[positionX,setPositionX] = useState(null);
+  const[positionY,setPositionY] = useState(null);
+  const [data, setData] = useState([
     { offset: 0, index: elements.length - 1 },
     { offset: 1, index: currentIndex },
     { offset: 2, index: currentIndex + 1 },
@@ -37,34 +39,61 @@ const Carousel = () => {
     />
   ));
 
+  const handleTouchStart = (e) => {
+    setPositionX(e.touches[0].clientX);
+    setPositionY(e.touches[0].clientY);
+  }
+
+  const handleTouchMove = (e) => {
+    if(!positionX || !positionY) {
+      return false;
+    }
+    let currentX = e.touches[0].clientX;
+    let currentY = e.touches[0].clientY;
+    if(Math.abs(currentX- positionX) > Math.abs(currentY- positionY)){
+      if(currentX - positionX > 0) {
+        next(); //right
+      } else {
+        next(); // left
+      }
+    } 
+    setPositionX(null);
+    setPositionY(null);
+    console.log(currentX,currentY);
+  }
 
   const next = (e) => {
-    e.target.classList.toggle("disable");
-    let mass = [...data];
+    if(e){
+      e.target.classList.toggle('disable');
+    }
+   
+    const mass = [...data];
     mass.forEach((element) => {
       element.offset -= 1;
     });
-    let index = mass[mass.length-1].index + 1;
-    if( index === 6) {
+    let index = mass[mass.length - 1].index + 1;
+    if (index === 6) {
       index = 0;
     }
-    mass.push({ offset: mass[mass.length-1].offset+1, index: index});
-    setElements(mass);
+    mass.push({ offset: mass[mass.length - 1].offset + 1, index });
+    setData(mass);
     setTimeout(() => {
-      setElements((elem) => {
-        let mass1 = elem.slice();
-        mass1.splice(0,1);
+      setData((elem) => {
+        const mass1 = elem.slice();
+        mass1.splice(0, 1);
         return mass1;
-      })
-      e.target.classList.toggle("disable");
-    }, 1000); 
+      });
+      if(e){
+        e.target.classList.toggle('disable');
+      }
+    }, 1000);
   };
 
   return (
     <>
-      <div className="carousel">{images}</div>
-      <div className="button-container">
-        <button type="button" className="prev-image" onClick={(e) =>next(e)}>
+      <div className="carousel" onTouchStart={(e) => handleTouchStart(e)} onTouchMove={(e) => handleTouchMove(e)}>{images}</div>
+      <div className="button-container" >
+        <button type="button" className="prev-image" onClick={(e) => next(e)}>
           &lt;
         </button>
         <button type="button" className="next-image" onClick={(e) => next(e)}>
