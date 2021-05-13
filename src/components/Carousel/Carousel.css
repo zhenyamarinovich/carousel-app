@@ -1,0 +1,75 @@
+/* img {
+    width: 400px;
+    height: 270px;
+    padding: 10px;
+}
+
+.carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carousel {
+    width: 120px;
+    height: 270px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    background-color:rgb(240, 240, 240);
+}
+
+.carousel-row {
+    width: 2400px;
+    height: 270px;
+    display: flex;
+    position: relative;
+    left: 0;
+    transition: all ease 0.7s;
+}
+
+.prev-image, .next-image{
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    border: 2px solid black;
+    border-radius: 50%;
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.prev-image:hover, .next-image:hover{
+    cursor: pointer;
+    background-color: gray;
+} */
+
+.carousel {
+    width: 1530px;
+    height: 366px;  
+    border: 3px solid black;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+}
+
+.carousel-item {
+    width: 512px;
+    height: 360px;  
+    position:absolute;
+    left:0;
+    right: 0;
+    transition: all ease 1s;
+}
+
+.prev-image, .next-image{
+    width: 50px;
+    height: 50px;
+    margin: 5px;
+    border: 2px solid black;
+    border-radius: 50%;
+    font-size: 25px;
+    font-weight: 700;
+}
+.prev-image:hover, .next-image:hover{
+    cursor: pointer;
+    background-color: gray;
+}

@@ -1,3 +1,14 @@
-h1{
-    color: rgb(31, 184, 44)
+*{
+    box-sizing: border-box;
+}
+
+.app {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgb(55, 0, 255);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color:white;
 }
