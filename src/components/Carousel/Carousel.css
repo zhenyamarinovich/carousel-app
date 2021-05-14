@@ -27,7 +27,7 @@
     font-weight: 700;
     user-select: none;
 }
-.carousel__button-control:hover, .number-image:hover{
+.carousel__button-control:hover, .carousel__picture-number:hover{
     cursor: pointer;
     background-color: rgb(183, 2, 255);
 }
