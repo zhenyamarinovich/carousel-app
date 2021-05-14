@@ -21,7 +21,10 @@ const optimization = () => {
 
 const plugins = () => {
   const basePlugins = [
-    new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      favicon: './src/assets/favicon.ico',
+    }),
     new MiniCssExtractPlugin(),
   ];
 
