@@ -13,7 +13,8 @@
     position:absolute;
     left:0;
     right: 0;
-    transition: all ease 1s;
+    transition: all ease 0.7s;
+    user-select: none;
 }
 
 .prev-image, .next-image{
@@ -26,7 +27,7 @@
     font-weight: 700;
     user-select: none;
 }
-.prev-image:hover, .next-image:hover{
+.prev-image:hover, .next-image:hover, .number-image:hover{
     cursor: pointer;
     background-color: rgb(183, 2, 255);
 }
@@ -34,4 +35,17 @@
 .disable {
     background-color: rgb(61, 2, 85);
     pointer-events: none;
+}
+
+.number-image{
+    font-size: 20px;
+    background-color: white;
+    color:black;
+    margin: 2px;
+    padding: 2px 7px;
+    border-radius: 50%;
+    user-select: none;
+}
+.current-number{
+    background-color:rgb(2, 141, 255);
 }
