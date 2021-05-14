@@ -1,8 +1,60 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsWebpackPlugin = require('optimize-css-assets-webpack-plugin');
+const TerserWebpackPlugin = require('terser-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack');
+
+const isDev = process.env.NODE_ENV === 'development';
+const isProd = !isDev;
+
+const optimization = () => {
+  const configObj = {};
+  if (isProd) {
+    configObj.minimizer = [
+      new OptimizeCssAssetsWebpackPlugin(),
+      new TerserWebpackPlugin(),
+    ];
+  }
+  return configObj;
+};
+
+const plugins = () => {
+  const basePlugins = [
+    new HtmlWebpackPlugin({ template: './src/index.html' }),
+    new MiniCssExtractPlugin(),
+  ];
+
+  if (isProd) {
+    basePlugins.push(
+      new ImageminPlugin({
+        bail: false,
+        cache: true,
+        imageminOptions: {
+          plugins: [
+            ['gifsicle', { interlaced: true }],
+            ['jpegtran', { progressive: true }],
+            ['optipng', { optimizationLevel: 5 }],
+            [
+              'svgo',
+              {
+                plugins: [
+                  {
+                    removeViewBox: false,
+                  },
+                ],
+              },
+            ],
+          ],
+        },
+      })
+    );
+  }
+  return basePlugins;
+};
 
 module.exports = {
+  mode: 'development',
   output: {
     path: path.join(__dirname, '/dist'),
     filename: 'index.js',
@@ -38,8 +90,6 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new HtmlWebpackPlugin({ template: './src/index.html' }),
-    new MiniCssExtractPlugin(),
-  ],
+  optimization: optimization(),
+  plugins: plugins(),
 };
